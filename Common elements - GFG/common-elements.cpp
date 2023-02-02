@@ -25,7 +25,11 @@ class Solution
                         j++;
                     }
                 }
-                if((A[i]==B[j] && A[i]==C[k]) && (A[i]!=A[i-1]) ){
+                if( i==0 && A[i]==B[j] && A[i]==C[k] ){
+                    ans.push_back(A[i]);
+                    j++;k++;
+                }
+                else if((A[i]==B[j] && A[i]==C[k]) && (A[i]!=A[i-1]) ){
                     ans.push_back(A[i]);
                     j++;k++;
                 }
