@@ -99,32 +99,24 @@ struct Node
 class Solution{
   public:
     /*You are required to complete this method*/
-    int hieght(Node* temp){
-        if(temp==NULL){
-            return 0;
-        }
-        return 1+max(hieght(temp->left),hieght(temp->right));
-    }
-    bool solve(Node* temp,int h,int level){
-        if(temp==NULL){
+    bool solve(Node* root,int level,int &leaflevel){
+        if(root==NULL){
             return true;
         }
-        if(temp->left==NULL && temp->right==NULL && level==h){
-            return true;
+        if(root->left==NULL && root->right==NULL){
+            if(leaflevel==0){
+                leaflevel=level;
+                return true;
+            }
+            return leaflevel==level;
         }
-        if(temp->left==NULL && temp->right==NULL && level!=h){
-            return false;
-        }
-        bool leftLevel=solve(temp->left,h,level+1);
-        bool rightLevel=solve(temp->right,h,level+1);
-        return leftLevel && rightLevel;
+        return solve(root->left,level+1,leaflevel) && solve(root->right,level+1,leaflevel);
     }
     bool check(Node *root)
     {
-        //find out hieght
-        int h=hieght(root);
-        
-        return solve(root,h,1);
+        int level=0;
+        int leaflevel=0;
+        return solve(root,level,leaflevel);
     }
 };
 
