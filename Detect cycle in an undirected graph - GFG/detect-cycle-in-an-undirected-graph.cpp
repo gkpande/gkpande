@@ -5,53 +5,34 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    
-    bool detectCycle(unordered_map<int,bool>&visited,unordered_map<int,int>&parent,vector<int> adj[],int src){
-        queue<int>q;
-        q.push(src);
+    // Function to detect cycle in an undirected graph.
+    bool detectCycle(int src,int par,unordered_map<int ,bool>&visited,vector<int> adj[]){
         visited[src]=true;
-        parent[src]=-1;
-        while(!q.empty()){
-            int frontNode=q.front();
-            q.pop();
-            for(auto i:adj[frontNode]){
-                // cout<<i;
-                if(visited[i]==true && parent[frontNode]!=i){
+        for(auto i:adj[src]){
+            if(!visited[i]){
+                
+                bool temp=detectCycle(i,src,visited,adj);
+                if(temp==true){
                     return true;
                 }
-                else if(!visited[i]){
-                    visited[i]=true;
-                    parent[i]=frontNode;
-                    q.push(i);
-                
             }
-        }
+            else if(visited[i]==true && i!=par){
+                return true;
+            }
         }
         return false;
     }
-    
-
-    
     bool isCycle(int V, vector<int> adj[]) {
-        
-        unordered_map<int,bool>visited;
-        
-        unordered_map<int,int>parent;
-        
-        //cout<<V;
+        unordered_map<int ,bool>visited;
         for(int i=0;i<V;i++){
             if(!visited[i]){
-                bool temp=detectCycle(visited,parent,adj,i);
-                if(temp==true)
-                {
+                bool temp=detectCycle(i,-1,visited,adj);
+                if(temp==true){
                     return true;
                 }
             }
-            
         }
-        
         return false;
-    
     }
 };
 
