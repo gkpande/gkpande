@@ -6,35 +6,37 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in a directed graph.
-    bool dfsCycle(int i,unordered_map<int, bool>&visited,unordered_map<int, bool>&dfsVisited,vector<int> adj[]){
-        visited[i]=true;
-        dfsVisited[i]=true;
-        for(auto j:adj[i]){
-            if(visited[j]==true && dfsVisited[j]==true){
-                return true;
-            }
-            else if(!visited[j]){
-                bool temp=dfsCycle(j,visited,dfsVisited,adj);
-                if(temp==true){
-                    return true;
-                }
-            }
-        }
-        dfsVisited[i]=false;
-        return false;
-    }
     bool isCyclic(int V, vector<int> adj[]) {
-        unordered_map<int, bool>visited;
-        unordered_map<int,bool>dfsVisited;
-        for(int i=0;i<V;i++){
-            if(!visited[i]){
-                bool temp=dfsCycle(i,visited,dfsVisited,adj);
-                if(temp==true){
-                    return true;
-                }
-            }
-        }
-        return false;
+        
+	
+	    vector<int>indegree(V);
+	    for(int i=0;i<V;i++){
+	        for(auto j:adj[i]){
+	            indegree[j]++;
+	        }
+	    }
+	    queue<int>q;
+	    for(int i=0;i<V;i++){
+	        if(indegree[i]==0){
+	            q.push(i);
+	        }
+	    }
+	    int count=0;
+	    while(!q.empty()){
+	        int front=q.front();
+	         count++;
+	        q.pop();
+	        for(auto j:adj[front]){
+	            indegree[j]--;
+	            if(indegree[j]==0){
+	                q.push(j);
+	            }
+	        }
+	    }
+	    if(count==V){
+	        return false;
+	    }
+	    return true;
     }
 };
 
