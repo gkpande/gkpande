@@ -10,32 +10,33 @@ class Solution
     int spanningTree(int V, vector<vector<int>> adj[])
     {
         vector<int>key(V);
+        priority_queue< pair<int,int>, vector <pair<int,int>> , greater<pair<int,int>> > pq;
         vector<bool>smt(V);
         vector<int> parent(V);
+        
         for(int i=0;i<V;i++){
             key[i]=INT_MAX;
             smt[i]=false;
             parent[i]=-1;
         }
+        
+        pq.push(make_pair(0, 0));
         key[0]=0;
-        // smt[0]=true;
+       
         parent[0]=-1;
-        for(int i=0;i<V;i++){
-            int min=INT_MAX;
-            int minNode;
-            for(int j=0;j<V;j++){
-                if(key[j]<min && smt[j]==false){
-                    min=key[j];
-                    minNode=j;
-                }
-            }
+        
+        while(!pq.empty()){
+            int minNode = pq.top().second;
+            int weight=pq.top().first;
+            pq.pop();
             smt[minNode]=true;
             for(auto k:adj[minNode]){
-                int v=k[0];
-                int w=k[1];
+                int v=k[0]; // v is adj vertex
+                int w=k[1];  // w is weight
                 if(smt[v]==false && w<key[v]){
                     key[v]=w;
                     parent[v]=minNode;
+                    pq.push(make_pair(w,v));
                 }
             }
             
