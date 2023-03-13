@@ -22,7 +22,7 @@ class Solution {
       return ans;
   }
   //recursive + memorization
-  int solve(vector<int>&cost ,int n,vector<int>&dp){
+  int solve1(vector<int>&cost ,int n,vector<int>&dp){
       if(n==0){
           return cost[0];
       }
@@ -33,7 +33,7 @@ class Solution {
           return dp[n];
       }
       
-      dp[n]=cost[n]+min(solve(cost,n-1,dp),solve(cost,n-2,dp));
+      dp[n]=cost[n]+min(solve1(cost,n-1,dp),solve1(cost,n-2,dp));
       return dp[n];
   }
     int minCostClimbingStairs(vector<int>&cost ,int N) {
@@ -41,7 +41,7 @@ class Solution {
         // int ans=min(solve(cost,N-1),solve(cost,N-2));
         // return ans;
         vector<int>dp(N+1,-1);
-        int ans=min(solve(cost,N-1,dp),solve(cost,N-2,dp));
+        int ans=min(solve1(cost,N-1,dp),solve1(cost,N-2,dp));
         return ans;
         
         
