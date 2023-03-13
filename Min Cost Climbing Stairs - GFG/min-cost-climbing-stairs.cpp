@@ -46,6 +46,18 @@ class Solution {
     }
      
   }
+  int solve3(vector<int>&cost ,int n){
+      
+    int prev2=cost[0];
+    int prev1=cost[1];
+    for(int i=2;i<n;i++){
+        int curr=cost[i]+min(prev1,prev2);
+        prev2=prev1;
+        prev1=curr;
+    }
+    return min(prev1,prev2);
+     
+  }
     int minCostClimbingStairs(vector<int>&cost ,int N) {
         // to go at top N we require min step if came from N-1 or N-2.
         // int ans=min(solve(cost,N-1),solve(cost,N-2));
@@ -53,9 +65,14 @@ class Solution {
         // vector<int>dp(N+1,-1);
         // dp[N] =min(solve1(cost,N-1,dp),solve1(cost,N-2,dp));
         // return dp[N];
-        vector<int>dp(N+1,-1);
-        solve2(cost,N,dp);
-        return min(dp[N-1],dp[N-2]);
+        // vector<int>dp(N+1,-1);
+        // solve2(cost,N,dp);
+        // return min(dp[N-1],dp[N-2]);
+        
+        
+        return solve3(cost,N);
+        
+        
         
         
     }
