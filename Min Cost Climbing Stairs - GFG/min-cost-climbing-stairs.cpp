@@ -41,8 +41,8 @@ class Solution {
         // int ans=min(solve(cost,N-1),solve(cost,N-2));
         // return ans;
         vector<int>dp(N+1,-1);
-        int ans=min(solve1(cost,N-1,dp),solve1(cost,N-2,dp));
-        return ans;
+        dp[N] =min(solve1(cost,N-1,dp),solve1(cost,N-2,dp));
+        return dp[N];
         
         
     }
