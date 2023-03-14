@@ -33,7 +33,7 @@ bool findPair(int arr[], int size, int n){
     int start=0;
     int end=1;
     while(start<=end && end<size){
-        if((arr[end]-arr[start])==n && start!=end){
+        if((arr[end]-arr[start])==n&&start!=end){
             return true;
         }
         else if((arr[end]-arr[start])>n){
