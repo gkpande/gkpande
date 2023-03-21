@@ -44,7 +44,7 @@ class Solution
             e=e+A[i];
         }
         while(s<=e){
-            int mid= s+(e-s)/2;
+            int mid= s+(e-s)/2;   // max number of book can alloted
             if(isPossible(mid,A,N,M)){
                 ans=mid;
                 e=mid-1;
