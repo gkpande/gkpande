@@ -50,13 +50,31 @@ public:
 	    
 	    return dp[n-1];
 	}
+	
+	int solveSpaceOpt(int *arr,int n){
+	   
+	    int incl=0;
+	    int excl=arr[0];
+	    
+	    for(int i=1;i<n;i++){
+	        incl=incl+arr[i];
+	        excl=excl+0;
+	        int ans= max(incl,excl);
+	        incl=excl;
+	        excl=ans;
+	    }
+	    
+	    return excl;
+	}
+	
 	int findMaxSum(int *arr, int n) {
 	   //int ans=solve(arr,n-1);
 	   //add memorization
 	   //vector<int>dp(n,-1);
 	   //int ans=solveMem(arr,n-1,dp);
 	   //return ans;
-	   return solveTab(arr,n);
+	   //return solveTab(arr,n);
+	   return solveSpaceOpt(arr,n);
 	}
 };
 
