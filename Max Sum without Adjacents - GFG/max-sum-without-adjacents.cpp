@@ -37,12 +37,26 @@ public:
 	    dp[n]= max(incl,excl);
 	    return dp[n];
 	}
+	int solveTab(int *arr,int n){
+	    vector<int>dp(n,0);
+	    dp[0]=arr[0];
+	    dp[1]=max(arr[1],arr[0]);
+	    
+	    for(int i=2;i<n;i++){
+	       int incl=dp[i-2]+arr[i];
+	        int excl=dp[i-1]+0;
+	        dp[i]= max(incl,excl);
+	    }
+	    
+	    return dp[n-1];
+	}
 	int findMaxSum(int *arr, int n) {
 	   //int ans=solve(arr,n-1);
 	   //add memorization
-	   vector<int>dp(n,-1);
-	   int ans=solveMem(arr,n-1,dp);
-	   return ans;
+	   //vector<int>dp(n,-1);
+	   //int ans=solveMem(arr,n-1,dp);
+	   //return ans;
+	   return solveTab(arr,n);
 	}
 };
 
