@@ -22,6 +22,9 @@ public:
                wSize++;
            }
        }
+       if(wSize==0 ||wSize==1){
+           return 0;
+       }
        //process 1st window to get number of swap required
        for(int i=0;i<wSize;i++){
            if(arr[i]>k){
