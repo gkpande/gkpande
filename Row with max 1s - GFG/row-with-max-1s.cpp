@@ -21,7 +21,7 @@ public:
      }
  }
 	int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
-	    int maxRow=0,row;
+	    int row;
 	    int indexPos=-1;
 	    int prevIndexPos =INT_MAX;
 	    for(int i=0;i<n;i++)
@@ -30,21 +30,28 @@ public:
 	        if(indexPos==0){
 	            return i;
 	        }
-	        if(indexPos!=-1 && indexPos<prevIndexPos){
+	        if(indexPos>0){
 	            row=i;
-	            prevIndexPos=indexPos;
+	            break;
 	        }
 	        
 	    }
 	    if(indexPos==-1){
 	        return -1;
 	    }
-	   // for(int i=1;i<n;i++){
-	   //     if(arr[i][indexPos]==1 && indexPos-1>=0 && arr[i][indexPos-1]==1){
-	   //         indexPos=indexPos-1;
-	   //         maxRow=i;
-	   //     }
-	   // }
+	   for(int i=1;i<n;i++){
+	        for(int j=indexPos;j>=0;j--){
+	         if(arr[i][j]==1 && j-1>=0 && arr[i][j-1]==1){
+	            indexPos=j-1;
+	           if(indexPos!=-1 && indexPos<prevIndexPos){
+	            row=i;
+	            prevIndexPos=indexPos;
+	        }
+	            }   
+	        }
+	        
+	          
+	   }
 	    return row;
 	}
 
