@@ -43,7 +43,7 @@ public:
 	        for(int j=indexPos;j>=0;j--){
 	         if(arr[i][j]==1 && j-1>=0 && arr[i][j-1]==1){
 	            indexPos=j-1;
-	           if(indexPos!=-1 && indexPos<prevIndexPos){
+	           if(indexPos<prevIndexPos){
 	            row=i;
 	            prevIndexPos=indexPos;
 	        }
