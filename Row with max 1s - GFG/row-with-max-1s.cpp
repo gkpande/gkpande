@@ -46,6 +46,7 @@ public:
 	           if(indexPos<prevIndexPos){
 	            row=i;
 	            prevIndexPos=indexPos;
+	            indexPos=prevIndexPos;
 	        }
 	            }   
 	        }
