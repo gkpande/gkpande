@@ -49,6 +49,19 @@ class Solution{
         }
         return dp[n];
     }
+    long long solveSo(int n,int k){
+        if(n==1){
+            return k;
+        }
+        long long prev2=k;
+        long long prev1= add(k,mul(k,k-1));
+        for(int i=3;i<=n;i++){
+            long long ans= add(mul(prev2,k-1),mul(prev1,k-1));
+            prev2=prev1;
+            prev1=ans;
+        }
+        return prev1;
+    }
     long long countWays(int n, int k){
       //recurive solution
     //   return solve(n,k);
@@ -56,7 +69,9 @@ class Solution{
     // vector<long long>dp(n+1,-1);
     // return solveMem(n,k,dp);
     //tabulation method
-    return solveTab(n,k);
+    // return solveTab(n,k);
+    //space optimization
+    return solveSo(n,k);
     }
 };
 
