@@ -40,12 +40,23 @@ class Solution{
         dp[n]= add(mul(solveMem(n-2,k,dp),k-1),mul(solveMem(n-1,k,dp),k-1));
         return dp[n];
     }
+    long long solveTab(int n,int k){
+        vector<long long>dp(n+1,-1);
+        dp[1]=k;
+        dp[2]= add(k,mul(k,k-1));
+        for(int i=3;i<=n;i++){
+            dp[i]= add(mul(dp[i-2],k-1),mul(dp[i-1],k-1));
+        }
+        return dp[n];
+    }
     long long countWays(int n, int k){
       //recurive solution
     //   return solve(n,k);
     //add memorization
-    vector<long long>dp(n+1,-1);
-    return solveMem(n,k,dp);
+    // vector<long long>dp(n+1,-1);
+    // return solveMem(n,k,dp);
+    //tabulation method
+    return solveTab(n,k);
     }
 };
 
