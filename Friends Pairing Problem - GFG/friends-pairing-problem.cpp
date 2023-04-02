@@ -47,6 +47,20 @@ int solveTab(int n){
     }
     return dp[n];
 }
+int solveSo(int n){
+    if(n==1){
+        return 1;
+    }
+    int prev1=1;
+    
+    int prev2=2;
+    for(int i=3;i<=n;i++){
+        int ans=add(prev2,mul(i-1,prev1));
+        prev1=prev2;
+        prev2=ans;
+    }
+    return prev2;
+}
 
     int countFriendsPairings(int n) 
     { 
@@ -56,7 +70,9 @@ int solveTab(int n){
         // vector<int>dp(n+1,-1);
         // return solveMem(n,dp);
         //tabulation method
-        return solveTab(n);
+        // return solveTab(n);
+        //space optimization
+        return solveSo(n);
         
     }
 };    
