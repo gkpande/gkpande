@@ -43,6 +43,19 @@ long int solveTab(int N){
     }
     return dp[N];
 }
+long int solveSo(int N){
+    
+    long int prev2=0;
+    long int prev1=1;
+    for(int i=3;i<=N;i++){
+        long int ans=(prev2+prev1)%MOD;
+        ans=((i-1)*ans)%MOD;
+        prev2=prev1;
+        prev1=ans;
+    }
+    return prev1;
+}
+
 
     long int disarrange(int N){
         //recursive
@@ -51,7 +64,9 @@ long int solveTab(int N){
         // vector<long int>dp(N+1,0);
         // return solveMem(N,dp);
         //tabulation
-        return solveTab(N);
+        // return solveTab(N);
+        // space optimization 
+        return solveSo(N);
     }
 };
 
