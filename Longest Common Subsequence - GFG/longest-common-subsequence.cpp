@@ -61,12 +61,30 @@ class Solution
         }
         return dp[0][0];
     }
+    int solveSo(int x,int y,string s1,string s2){
+        vector<int>next(y+1,0);
+        vector<int>curr(y+1,0);
+        
+        for(int i=x-1;i>=0;i--){
+            for(int j=y-1;j>=0;j--){
+                if(s1[i]==s2[j]){
+                    curr[j]=1+next[j+1];
+                }
+                else{
+                    curr[j]=max(curr[j+1],next[j]);
+                }
+            }
+            next=curr;
+        }
+        return curr[0];
+    }
     int lcs(int x, int y, string s1, string s2)
     {
         // return solveRec(x,y,s1,s2,0,0);
         // vector<vector<int>>dp(x,vector<int>(y,-1));
         // return solveMem(x,y,s1,s2,0,0,dp);
-        return solveTab(x,y,s1,s2);
+        // return solveTab(x,y,s1,s2);
+        return solveSo(x,y,s1,s2);
     }
 };
 
