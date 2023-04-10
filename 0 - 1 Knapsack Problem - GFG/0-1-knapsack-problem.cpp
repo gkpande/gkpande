@@ -8,55 +8,50 @@ class Solution
 {
     public:
     //Function to return max value that can be put in knapsack of capacity W.
-    //recursive
-    int solve(int W, int wt[], int val[], int n){
-        if(n==0){
-            if(wt[n]<=W){
-                return val[n];
+    int solveRec(int capacity, int wt[], int val[], int index){
+        if(index==0){
+            if(wt[index]<=capacity){
+                return val[index];
             }
             else{
                 return 0;
             }
         }
-        int incl=0;
-        int excl=0;
-        if(wt[n]<=W){
-            incl=val[n]+solve(W-wt[n],wt,val,n-1);
+        int include=0;
+        if(wt[index]<=capacity){
+            include=val[index]+solveRec(capacity-wt[index],wt,val,index-1);
         }
-        excl=0+solve(W,wt,val,n-1);
-        return max(incl,excl);
+        int exlude=0+solveRec(capacity,wt,val,index-1);
+        return max(include,exlude);
     }
-    //recursive+memorization.
-    int solveMem(int W, int wt[], int val[], int n,vector<vector<int>>&dp){
-        if(n==0){
-            if(wt[n]<=W){
-                return val[n];
+    int solveMem(int capacity, int wt[], int val[], int index,vector<vector<int>>&dp){
+        if(index==0){
+            if(wt[index]<=capacity){
+                return val[index];
             }
             else{
                 return 0;
             }
         }
-        
-        if(dp[n][W]!=-1){
-            return dp[n][W];
+        if(dp[index][capacity]!=-1){
+            return dp[index][capacity];
         }
-        
-        int incl=0;
-        int excl=0;
-        if(wt[n]<=W){
-            incl=val[n]+solveMem(W-wt[n],wt,val,n-1,dp);
+        int include=0;
+        if(wt[index]<=capacity){
+            include=val[index]+solveMem(capacity-wt[index],wt,val,index-1,dp);
         }
-        excl=0+solveMem(W,wt,val,n-1,dp);
-        dp[n][W]=max(incl,excl);
-        return dp[n][W];
+        int exlude=0+solveMem(capacity,wt,val,index-1,dp);
+        dp[index][capacity]= max(include,exlude);
+        return dp[index][capacity];
     }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-    //   return solve(W,wt,val,n-1);
-    
+       //recursive
+    //   return solveRec(W,wt,val,n-1);
+    //recursive+mem
     vector<vector<int>>dp(n,vector<int>(W+1,-1));
     return solveMem(W,wt,val,n-1,dp);
-    
+       
     }
 };
 
