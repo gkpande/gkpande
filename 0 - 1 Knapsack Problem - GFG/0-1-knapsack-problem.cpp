@@ -68,7 +68,7 @@ class Solution
         return dp[n-1][capacity];
     }
     int solveSo(int capacity, int wt[], int val[], int n){
-        vector<vector<int>>dp(n,vector<int>(capacity+1,0));
+        
         vector<int>prev(capacity+1,0);
         vector<int>curr(capacity+1,0);
         //if index=0
@@ -93,6 +93,32 @@ class Solution
         }
         return prev[capacity];
     }
+    int solveSoMore(int capacity, int wt[], int val[], int n){
+        
+        
+        vector<int>curr(capacity+1,0);
+        //if index=0
+        for(int w=wt[0];w<=capacity;w++){
+            if(wt[0]<=capacity){
+                curr[w]=val[0];
+            }
+            else{
+                curr[w]=0;
+            }
+        }
+        for(int index=1;index<n;index++ ){
+            for(int w=capacity;w>=0;w--){
+                int include=0;
+                if(wt[index]<=w){
+                    include=val[index]+curr[w-wt[index]];
+                }
+                int exlude=0+curr[w];
+                curr[w]= max(include,exlude);  
+            }
+            
+        }
+        return curr[capacity];
+    }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
        //recursive
@@ -102,7 +128,8 @@ class Solution
     // return solveMem(W,wt,val,n-1,dp);
     //tabulation
     // return solveTab(W,wt,val,n);
-    return solveSo(W,wt,val,n);
+    // return solveSo(W,wt,val,n);
+    return solveSoMore(W,wt,val,n);
        
     }
 };
