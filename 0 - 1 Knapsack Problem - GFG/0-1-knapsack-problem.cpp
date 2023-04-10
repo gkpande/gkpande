@@ -44,13 +44,38 @@ class Solution
         dp[index][capacity]= max(include,exlude);
         return dp[index][capacity];
     }
+    int solveTab(int capacity, int wt[], int val[], int n){
+        vector<vector<int>>dp(n,vector<int>(capacity+1,0));
+        //if index=0
+        for(int w=wt[0];w<=capacity;w++){
+            if(wt[0]<=capacity){
+                dp[0][w]=val[0];
+            }
+            else{
+                dp[0][w]=0;
+            }
+        }
+        for(int index=1;index<n;index++ ){
+            for(int w=0;w<=capacity;w++){
+                int include=0;
+                if(wt[index]<=w){
+                    include=val[index]+dp[index-1][w-wt[index]];
+                }
+                int exlude=0+dp[index-1][w];
+                dp[index][w]= max(include,exlude);  
+            }
+        }
+        return dp[n-1][capacity];
+    }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
        //recursive
     //   return solveRec(W,wt,val,n-1);
     //recursive+mem
-    vector<vector<int>>dp(n,vector<int>(W+1,-1));
-    return solveMem(W,wt,val,n-1,dp);
+    // vector<vector<int>>dp(n,vector<int>(W+1,-1));
+    // return solveMem(W,wt,val,n-1,dp);
+    //tabulation
+    return solveTab(W,wt,val,n);
        
     }
 };
