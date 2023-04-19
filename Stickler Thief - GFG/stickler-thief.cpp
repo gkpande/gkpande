@@ -39,6 +39,20 @@ class Solution
         
         return dp[0];
     }
+    int solveSo(int arr[],int n){
+       int incl=0;
+       int excl=arr[0];
+        
+        for(int i=1;i<n;i++){
+            incl=arr[i]+incl;
+            excl=0+excl;
+            int ans=max(incl,excl);
+            incl=excl;
+            excl=ans;
+        }
+        
+        return excl;
+    }
     int FindMaxSum(int arr[], int n)
     {
         // return solveRec(arr,n,0);
@@ -46,7 +60,8 @@ class Solution
         // vector<int>dp(n,-1);
         // return solveMem(arr,n,0,dp);
         //tabulation method
-        return solveTab(arr,n);
+        // return solveTab(arr,n);
+        return solveSo(arr,n);
     }
 };
 
