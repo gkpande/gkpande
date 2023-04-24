@@ -54,6 +54,31 @@ int solveTab(int n,int m,vector<vector<int>> &M){
     return fans;
     
 }
+int solveSo(int n,int m,vector<vector<int>> &M){
+    vector<int>curr(n,0);
+    vector<int>prev(n,0);
+    
+    for(int j=m-1;j>=0;j--){
+        for(int i=0;i<n;i++){
+           //lower right diagonal.
+            int ans1=(j==m-1 || i==0)?0:prev[i-1];
+            
+
+            int ans2=(j==m-1)?0:prev[i];
+           
+               int ans3=(i==n-1 || j==m-1)?0:prev[i+1];
+           
+            curr[i]=M[i][j]+max(ans1,max(ans2,ans3));
+        }
+        prev=curr;
+    }
+    int fans=INT_MIN;
+    for(int i=0;i<n;i++){
+        fans=max(fans,prev[i]);
+    }
+    return fans;
+    
+}
     int maxGold(int n, int m, vector<vector<int>> M)
     {
        int fans=INT_MIN;
@@ -69,7 +94,9 @@ int solveTab(int n,int m,vector<vector<int>> &M){
     //       fans=max(fans,ans);
     //   }
     //---------------tabulation---------------
-    return solveTab(n,m,M);;
+    return solveTab(n,m,M);
+    //----------space optimization
+    return solveSo(n,m,M);
     }
 };
 
