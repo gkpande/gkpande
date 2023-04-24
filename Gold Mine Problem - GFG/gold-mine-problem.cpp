@@ -31,6 +31,29 @@ int solveMem(int start,int end,int n,int m,vector<vector<int>> &M,vector<vector<
     dp[start][end]= max(ans1,max(ans2,ans3));
     return dp[start][end];
 }
+int solveTab(int n,int m,vector<vector<int>> &M){
+    vector<vector<int>>dp(n,vector<int>(m,-1));
+    
+    for(int j=m-1;j>=0;j--){
+        for(int i=0;i<n;i++){
+           
+                int ans1=(j==m-1 || i==0)?0:dp[i-1][j+1];
+            
+
+            int ans2=(j==m-1)?0:dp[i][j+1];
+           
+               int ans3=(i==n-1 || j==m-1)?0:dp[i+1][j+1];
+           
+            dp[i][j]=M[i][j]+max(ans1,max(ans2,ans3));
+        }
+    }
+    int fans=INT_MIN;
+    for(int i=0;i<n;i++){
+        fans=max(fans,dp[i][0]);
+    }
+    return fans;
+    
+}
     int maxGold(int n, int m, vector<vector<int>> M)
     {
        int fans=INT_MIN;
@@ -38,13 +61,15 @@ int solveMem(int start,int end,int n,int m,vector<vector<int>> &M,vector<vector<
     //       int ans=solveRec(i,0,n,m,M);
     //       fans=max(fans,ans);
     //   }
-    vector<vector<int>>dp(n,vector<int>(m,-1));
-    for(int i=0;i<n;i++ ){
-           int ans=solveMem(i,0,n,m,M,dp);
+    //--------------------------//
+    // vector<vector<int>>dp(n,vector<int>(m,-1));
+    // for(int i=0;i<n;i++ ){
+    //       int ans=solveMem(i,0,n,m,M,dp);
            
-           fans=max(fans,ans);
-       }
-       return fans;
+    //       fans=max(fans,ans);
+    //   }
+    //---------------tabulation---------------
+    return solveTab(n,m,M);;
     }
 };
 
