@@ -59,6 +59,27 @@ int solveTab(int N, int W, int val[], int wt[]){
     return dp[0][W];
     
 }
+int solveSo(int N, int W, int val[], int wt[]){
+    
+    vector<int>prev(W+1,0);
+    for(int w=0;w<=W;w++){
+        prev[w]= int(w/wt[N-1])* val[N-1];
+    }
+    for(int i=N-2;i>=0;i--){
+        vector<int>curr(W+1,0);
+        for(int w=0;w<=W;w++ ){
+            int take =0;
+            if(wt[i]<=w){
+                take=val[i]+curr[w-wt[i]];
+            }
+            int nTake=0+prev[w];
+            curr[w]= max(take,nTake);
+        }
+        prev=curr;
+    }
+    return prev[W];
+    
+}
 
 
     int knapSack(int N, int W, int val[], int wt[])
@@ -69,7 +90,9 @@ int solveTab(int N, int W, int val[], int wt[]){
         // vector<vector<int>>dp(N,vector<int>(W+1,-1));
         // return solveMem(N,W,val,wt,0,dp);
         //-----tabulation
-        return solveTab(N,W,val,wt);
+        // return solveTab(N,W,val,wt);
+        //------------space optimization
+        return solveSo(N,W,val,wt);
     }
 };
 
