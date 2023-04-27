@@ -18,7 +18,7 @@ class Solution{
     	int i=1;
     	int j=0;
     	int result=1;
-    	while(i<n && j<n){
+    	while(i<n ){
     	    if(arr[i]<=dep[j]){
     	        minPlat++;
     	        i++;
