@@ -86,6 +86,36 @@ class Solution {
       }
       return dp[0][0];
   }
+  int solveSo(string s,string t){
+      
+      vector<int>next(t.length()+1,0);
+      vector<int>curr(t.length()+1,0);
+      for(int j=0;j<=t.length();j++){
+          next[j]=t.length()-j;
+          
+      }
+      for(int i=s.length()-1;i>=0;i--){
+          for(int j=t.length()-1;j>=0;j--){
+              curr[t.length()]=s.length()-i;
+              int ans=0;
+              if(s[i]==t[j]){
+                  ans=next[j+1];
+              }
+              else{
+                    //insert
+                    int insertAns=1+curr[j+1];
+                    //delete
+                    int deleteAns=1+next[j];
+                    //replace
+                    int replaceAns=1+next[j+1];
+                    ans=min(insertAns,min(deleteAns,replaceAns));
+                }
+            curr[j]=ans;
+          }
+          next=curr;
+      }
+      return next[0];
+  }
     int editDistance(string s, string t) {
         //recursive solution
         // return solveRec(s,t,0,0);
@@ -93,7 +123,9 @@ class Solution {
         // vector<vector<int>>dp(s.length(),vector<int>(t.length(),-1));
         // return solveMem(s,t,0,0,dp);
         //Tabulation
-        return solveTab(s,t);
+        // return solveTab(s,t);
+        //space optimization
+        return solveSo(s,t);
     }
 };
 
