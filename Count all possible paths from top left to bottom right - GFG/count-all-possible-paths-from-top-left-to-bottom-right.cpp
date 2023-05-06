@@ -51,13 +51,27 @@ class Solution {
       }
       return dp[0][0];
   }
+  int solveSo(int i,int j,int m,int n){
+      vector<int>prev(n,1);
+      vector<int>curr(n,0);
+      for(int i=m-2;i>=0;i--){
+          curr[n-1]=1;
+          for(int j=n-2;j>=0;j--){
+              curr[j]=(prev[j]+curr[j+1])%1000000007;
+          }
+          prev=curr;
+      }
+      return prev[0];
+  }
     long long int numberOfPaths(int m, int n){
        //recursive
     //   return solveRec(0,0,m,n);
     //rec+mem
     // vector<vector<int>>dp(m,vector<int>(n,-1));
     // return solveMem(0,0,m,n,dp);
-    return solveTab(0,0,m,n);
+    // return solveTab(0,0,m,n);
+    //space optimization
+    return solveSo(0,0,m,n);
     }
 };
 
