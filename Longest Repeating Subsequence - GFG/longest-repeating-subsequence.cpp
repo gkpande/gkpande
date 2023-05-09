@@ -57,6 +57,25 @@ class Solution {
 	    return dp[0][0];
 	}
 	
+	int solveSoLcs(string str1, string str2,int n){
+	   vector<int>curr(n+1,0);
+	   vector<int>prev(n+1,0);
+	    for(int i=n-1;i>=0;i--){
+	        for(int j=n-1;j>=0;j--){
+	            if(str1[i]==str2[j] && i!=j ){
+	                curr[j]=1+prev[j+1];
+	            }
+	            else{
+	               curr[j]=max(curr[j+1],prev[j]);
+	            }
+	        }
+	        prev=curr;
+	    }
+	    
+	    return prev[0];
+	}
+	
+	
 		int LongestRepeatingSubsequence(string str){
 		    int n=str.length();
 		    string str1=str;
@@ -64,7 +83,8 @@ class Solution {
 		  //  return solveRecLcs(str1,str2,n,0,0);
 		  //vector<vector<int>>dp(n,vector<int>(n,-1));
 		  //return solveMemLcs(str1,str2,n,0,0,dp);
-		  return solveTabLcs(str1,str2,n);
+		  //return solveTabLcs(str1,str2,n);
+		  return solveSoLcs(str1,str2,n);
 		}
 
 };
