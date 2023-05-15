@@ -47,9 +47,26 @@ int solveMem(string A, string B, string C,int i,int j,int k,int n1,int n2,int n3
     dp[i][j][k]=ans;
     return dp[i][j][k];
 }
+int solveTab(string A, string B, string C,int n1,int n2,int n3){
+    vector<vector<vector<int>>>dp(n1+1,vector<vector<int>>(n2+1,vector<int>(n3+1,0)));
+    for(int i=n1-1;i>=0;i--){
+        for(int j=n2-1;j>=0;j--){
+            for(int k=n3-1;k>=0;k--){
+              if(A[i]==B[j] && B[j]==C[k]){
+                    dp[i][j][k]=1+dp[i+1][j+1][k+1];
+              }
+             else{
+                    dp[i][j][k]=max(dp[i+1][j][k],max(dp[i][j+1][k],dp[i][j][k+1]));
+             }
+            }
+        }
+    }
+    return dp[0][0][0];
+}
 int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
 {
     // return solveRec(A,B,C,0,0,0,n1,n2,n3);
-    vector<vector<vector<int>>>dp(n1,vector<vector<int>>(n2,vector<int>(n3,-1)));
-    return solveMem(A,B,C,0,0,0,n1,n2,n3,dp);
+    // vector<vector<vector<int>>>dp(n1,vector<vector<int>>(n2,vector<int>(n3,-1)));
+    // return solveMem(A,B,C,0,0,0,n1,n2,n3,dp);
+    return solveTab(A,B,C,n1,n2,n3);
 }
