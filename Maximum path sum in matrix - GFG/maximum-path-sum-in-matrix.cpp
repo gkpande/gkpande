@@ -80,6 +80,37 @@ int solveTab(int N,vector<vector<int>> Matrix){
     }
     return maxPath;
 }
+int solveSo(int N,vector<vector<int>> Matrix){
+    vector<int>prev(N,0);
+    vector<int>curr(N,0);
+    for(int i=0;i<N;i++){
+        prev[i]=Matrix[N-1][i];
+    }
+    for(int i=N-2;i>=0;i--){
+        for(int j=N-1;j>=0;j--){
+            int ans1=0,ans2=0,ans3=0;  
+            //lower digonal
+            if(i+1<N && j-1>=0){
+                ans1=Matrix[i][j]+prev[j-1];
+            }
+            //lower
+            if(i+1<N){
+                ans2=Matrix[i][j]+prev[j];
+            }
+            //lower right diagnola
+            if(i+1<N && j+1<N){
+                ans3=Matrix[i][j]+prev[j+1];
+            }
+            curr[j]=max(ans1,max(ans2,ans3));
+        }
+        prev=curr;
+    }
+    int maxPath=INT_MIN;
+    for(int i=0;i<N;i++){
+            maxPath=max(maxPath,prev[i]);
+    }
+    return maxPath;
+}
     int maximumPath(int N, vector<vector<int>> Matrix)
     {
         // int maxPath=INT_MIN;
@@ -95,7 +126,8 @@ int solveTab(int N,vector<vector<int>> Matrix){
         // }
         // return maxPath;
         //tabulation
-        return solveTab(N,Matrix);
+        // return solveTab(N,Matrix);
+         return solveSo(N,Matrix);
     }
 };
 
