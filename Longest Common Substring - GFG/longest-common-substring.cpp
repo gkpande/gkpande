@@ -5,10 +5,7 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
     public:
-    
-    int longestCommonSubstr (string S1, string S2, int n, int m)
-    {
-        //create a 2d array dp:tabulation method
+    int solveTab(string &S1, string &S2, int n, int m){
         vector<vector<int>>dp(n+1,vector<int>(m+1,0));
         int res=0;
         for(int i=1;i<=n;i++){
@@ -23,6 +20,11 @@ class Solution{
             }
         }
         return res;
+    }
+    int longestCommonSubstr (string S1, string S2, int n, int m)
+    {
+        return solveTab(S1,S2,n,m);
+        
     }
 };
 
