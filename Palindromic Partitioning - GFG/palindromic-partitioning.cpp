@@ -49,13 +49,30 @@ int solveMem(string &str ,int i,int n,vector<int>&dp){
     dp[i]=minPart;
     return dp[i];
 }
+int solveTab(string &str ,int n){
+    vector<int>dp(n+1,0);
+    for(int i=n-1;i>=0;i--){
+        int minPart=INT_MAX;
+        for(int j=n-1;j>=i;j--){
+            if(palindrom(i,j,str)){
+                int cost=1+dp[j+1];
+                minPart=min(minPart,cost);
+            }
+        }
+        dp[i]=minPart;
+    }
+    
+    
+    return dp[0];
+}
     int palindromicPartition(string str)
     {
         int n=str.size();
         // return solveRec(str,0,n)-1;
         //memorization
-        vector<int>dp(n,-1);
-        return solveMem(str,0,n,dp)-1;
+        // vector<int>dp(n,-1);
+        // return solveMem(str,0,n,dp)-1;
+        return solveTab(str,n)-1;
     }
 };
 
