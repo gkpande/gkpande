@@ -80,6 +80,30 @@ class Solution {
       
       return dp[0][0];
   }
+  int solveSo(int K,int N,int A[]){
+      vector<int>prev(2*K+1,0);
+      vector<int>curr(2*K+1,0);
+      for(int i=N-1;i>=0;i--){
+          for(int t=2*K-1;t>=0;t--){
+                int profit=0;
+                if(t%2==0){
+                //buy
+                    int buy= -A[i]+prev[t+1];
+                    int skip=0+prev[t];
+                    profit=max(buy,skip);
+                }
+                else{
+                    //sell
+                    int sell=A[i]+prev[t+1];
+                    int skip=0+prev[t];
+                    profit=max(sell,skip);
+                }
+                curr[t]=profit; 
+            }
+            prev=curr;
+        }
+        return prev[0];
+  }
     int maxProfit(int K, int N, int A[]) {
         //can reuse the code most 2 transaction
         // return solveRec(0,0,2*K,N,A);
@@ -87,7 +111,10 @@ class Solution {
         // vector<vector<int>>dp(N,vector<int>(2*K,-1));
         // return solveMem(0,0,2*K,N,A,dp);
         //tabulation
-        return solveTab(K,N,A);
+        // return solveTab(K,N,A);
+        //space optimization
+        return solveSo(K,N,A);
+        
         
     }
 };
