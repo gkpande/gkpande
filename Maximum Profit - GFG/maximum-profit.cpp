@@ -57,12 +57,37 @@ class Solution {
       dp[i][t]=profit;
       return dp[i][t];
   }
+  int solveTab(int K,int N,int A[]){  // L-limit,l=2*k
+      vector<vector<int>>dp(N+1,vector<int>(2*K+1,0));
+      for(int i=N-1;i>=0;i--){
+          for(int t=2*K-1;t>=0;t--){
+                int profit=0;
+                if(t%2==0){
+                //buy
+                    int buy= -A[i]+dp[i+1][t+1];
+                    int skip=0+dp[i+1][t];
+                    profit=max(buy,skip);
+                }
+                else{
+                    //sell
+                    int sell=A[i]+dp[i+1][t+1];
+                    int skip=0+dp[i+1][t];
+                    profit=max(sell,skip);
+                }
+                dp[i][t]=profit; 
+            }
+        }
+      
+      return dp[0][0];
+  }
     int maxProfit(int K, int N, int A[]) {
         //can reuse the code most 2 transaction
         // return solveRec(0,0,2*K,N,A);
         //add memorization
-        vector<vector<int>>dp(N,vector<int>(2*K,-1));
-        return solveMem(0,0,2*K,N,A,dp);
+        // vector<vector<int>>dp(N,vector<int>(2*K,-1));
+        // return solveMem(0,0,2*K,N,A,dp);
+        //tabulation
+        return solveTab(K,N,A);
         
     }
 };
