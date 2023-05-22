@@ -1,0 +1,79 @@
+//{ Driver Code Starts
+//Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution{
+  public:
+    bool solveRec(string A, string B, string C,int m,int n,int p,int i,int j,int k){
+        if(i==m && j==n && k==p){
+            return true;
+        }
+        if(k==p){
+            return false;
+        }
+        bool ans1=false;
+        if(i<m && A[i]==C[k]){
+            ans1=solveRec(A,B,C,m,n,p,i+1,j,k+1);
+        }
+        bool ans2=false;
+        if(j<n && B[j]==C[k]){
+            ans2=solveRec(A,B,C,m,n,p,i,j+1,k+1);
+        }
+        return ans1||ans2;
+    }
+    bool solveMem(string A, string B, string C,int m,int n,int p,int i,int j,int k,vector<vector<vector<int>>>&dp){
+        if(i==m && j==n && k==p){
+            return true;
+        }
+        if(k==p){
+            return false;
+        }
+        if(dp[k][i][j]!=-1){
+            return dp[k][i][j];
+        }
+        bool ans1=false;
+        if(i<m && A[i]==C[k]){
+            ans1=solveMem(A,B,C,m,n,p,i+1,j,k+1,dp);
+        }
+        bool ans2=false;
+        if(j<n && B[j]==C[k]){
+            ans2=solveMem(A,B,C,m,n,p,i,j+1,k+1,dp);
+        }
+        dp[k][i][j]=ans1||ans2;
+        return dp[k][i][j];
+    }
+    
+    bool isInterleave(string A, string B, string C) 
+    {
+        int m=A.size();
+        int n=B.size();
+        int p=C.size();
+        // return solveRec(A,B,C,m,n,p,0,0,0);
+        vector<vector<vector<int>>>dp(p+1,vector<vector<int>>(m+1,vector<int>(n+1,-1)));
+        return solveMem(A,B,C,m,n,p,0,0,0,dp);
+    }
+
+};
+
+//{ Driver Code Starts.
+int main() {
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		string a,b,c;
+		cin>>a;
+		cin>>b;
+		cin>>c;
+		Solution obj;
+		cout<<obj.isInterleave(a,b,c)<<endl;
+	}
+	// your code goes here
+	return 0;
+}
+// } Driver Code Ends
