@@ -71,6 +71,33 @@ class Solution{
         
         return dp[0][0];
     }
+    bool solveSo(string A, string B, string C,int m,int n,int p){
+        vector<int>prev(n+1,0);
+        vector<int>curr(n+1,0);
+        
+        for(int i=m;i>=0;i--){
+            for(int j=n;j>=0;j--){
+                if(i==m && j==n){
+                    prev[n]=1;
+                    curr[n]=1;
+                    continue;
+                }
+                bool ans1=false;
+                if(i!=m && A[i]==C[i+j]){
+                    ans1=prev[j];
+                }
+                bool ans2=false;
+                if(j!=n && B[j]==C[i+j]){
+                    ans2=curr[j+1];
+                }
+                curr[j]=ans1||ans2;
+            }
+            prev=curr;
+        }
+        
+        
+        return prev[0];
+    }
     bool isInterleave(string A, string B, string C) 
     {
         int m=A.size();
@@ -79,7 +106,8 @@ class Solution{
         // return solveRec(A,B,C,m,n,p,0,0,0);
         // vector<vector<int>>dp(m+1,vector<int>(n+1,-1));
         // return solveMem(A,B,C,m,n,p,0,0,0,dp);
-        return solveTab(A,B,C,m,n,p);
+        // return solveTab(A,B,C,m,n,p);
+        return solveSo(A,B,C,m,n,p);
         
         
     }
