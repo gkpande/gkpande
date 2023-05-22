@@ -26,15 +26,15 @@ class Solution{
         }
         return ans1||ans2;
     }
-    bool solveMem(string A, string B, string C,int m,int n,int p,int i,int j,int k,vector<vector<vector<int>>>&dp){
+    bool solveMem(string A, string B, string C,int m,int n,int p,int i,int j,int k,vector<vector<int>>&dp){
         if(i==m && j==n && k==p){
             return true;
         }
         if(k==p){
             return false;
         }
-        if(dp[k][i][j]!=-1){
-            return dp[k][i][j];
+        if(dp[i][j]!=-1){
+            return dp[m][n];
         }
         bool ans1=false;
         if(i<m && A[i]==C[k]){
@@ -44,18 +44,44 @@ class Solution{
         if(j<n && B[j]==C[k]){
             ans2=solveMem(A,B,C,m,n,p,i,j+1,k+1,dp);
         }
-        dp[k][i][j]=ans1||ans2;
-        return dp[k][i][j];
+        dp[m][n]=ans1||ans2;
+        return dp[i][j];
     }
     
+    bool solveTab(string A, string B, string C,int m,int n,int p){
+        vector<vector<int>>dp(m+1,vector<int>(n+1,0));
+        for(int i=m;i>=0;i--){
+            for(int j=n;j>=0;j--){
+                if(i==m && j==n){
+                    dp[m][n]=1;
+                    continue;
+                }
+                bool ans1=false;
+                if(i!=m && A[i]==C[i+j]){
+                    ans1=dp[i+1][j];
+                }
+                bool ans2=false;
+                if(j!=n && B[j]==C[i+j]){
+                    ans2=dp[i][j+1];
+                }
+                dp[i][j]=ans1||ans2;
+            }
+        }
+        
+        
+        return dp[0][0];
+    }
     bool isInterleave(string A, string B, string C) 
     {
         int m=A.size();
         int n=B.size();
         int p=C.size();
         // return solveRec(A,B,C,m,n,p,0,0,0);
-        vector<vector<vector<int>>>dp(p+1,vector<vector<int>>(m+1,vector<int>(n+1,-1)));
-        return solveMem(A,B,C,m,n,p,0,0,0,dp);
+        // vector<vector<int>>dp(m+1,vector<int>(n+1,-1));
+        // return solveMem(A,B,C,m,n,p,0,0,0,dp);
+        return solveTab(A,B,C,m,n,p);
+        
+        
     }
 
 };
