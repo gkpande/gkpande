@@ -96,6 +96,41 @@ int solveTab(string p,string s,int m,int n){
     return dp[m][n];
 }
 
+int solveSo(string p,string s,int m,int n){
+    vector<int>prev(n+1,0);
+    vector<int>curr(n+1,0);
+    prev[0]=1;
+    for(int i=1;i<=p.length();i++){
+        for(int j=0;j<=s.length();j++){
+            if(j==0){
+                for(int i=1;i<=p.length();i++){
+                    int flag=1;
+                    for(int k=1;k<=i;k++){
+                        if(p[k-1]!='*'){
+                            flag=0;
+                            break;
+                        }
+                    }
+                    curr[0]=flag;
+                }
+            }
+            if(p[i-1]==s[j-1] || p[i-1]=='?'){
+                curr[j]= prev[j-1];
+            }
+            else if(p[i-1]=='*'){
+                curr[j]= prev[j] || curr[j-1];
+            }
+            else{
+                curr[j]=0;
+            }
+        }
+        prev=curr;
+    }
+    
+    
+    return prev[n];
+}
+
 
     int wildCard(string pattern,string str)
     {
@@ -104,7 +139,8 @@ int solveTab(string p,string s,int m,int n){
         // return solveRec(pattern,str,m-1,n-1);
         // vector<vector<int>>dp(m+1,vector<int>(n+1,-1));
         // return solveMem(pattern,str,m,n,dp);
-        return solveTab(pattern,str,m,n);
+        // return solveTab(pattern,str,m,n);
+        return solveSo(pattern,str,m,n);
         
     }
 };
