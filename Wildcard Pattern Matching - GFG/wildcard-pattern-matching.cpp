@@ -32,15 +32,15 @@ int solveRec(string p,string s,int i,int j){
     }
 }
 int solveMem(string p,string s,int i,int j,vector<vector<int>>&dp){
-    if(i<0 && j<0){
+    if(i==0 && j==0){
         return 1;
     }
-    if(i<0 && j>=0){
+    if(i==0 && j>=1){
         return 0;
     }
-    if(i>=0 && j<0){
-        for(int k=0;k<=i;k++){
-            if(p[k]!='*'){
+    if(i>=1 && j==0){
+        for(int k=1;k<=i;k++){
+            if(p[k-1]!='*'){
                 return 0;
             }
         }
@@ -49,10 +49,11 @@ int solveMem(string p,string s,int i,int j,vector<vector<int>>&dp){
     if(dp[i][j]!=-1){
         return dp[i][j];
     }
-    if(p[i]==s[j] || p[i]=='?'){
+    //matches
+    if(p[i-1]==s[j-1] || p[i-1]=='?'){
         return dp[i][j]= solveMem(p,s,i-1,j-1,dp);
     }
-    else if(p[i]=='*'){
+    else if(p[i-1]=='*'){
         return dp[i][j]=solveMem(p,s,i-1,j,dp) || solveMem(p,s,i,j-1,dp);
     }
     else{
@@ -60,13 +61,41 @@ int solveMem(string p,string s,int i,int j,vector<vector<int>>&dp){
     }
 }
 
+// int solveTab(string p,string s,int m,int n){
+//     vector<vector<int>>dp(m,vector<int>(n,0));
+    
+//     if(i>=0 && j<0){
+//         for(int k=0;k<=i;k++){
+//             if(p[k]!='*'){
+//                 return 0;
+//             }
+//         }
+//         return 1;
+//     }
+//     if(dp[i][j]!=-1){
+//         return dp[i][j];
+//     }
+//     //matches
+//     if(p[i]==s[j] || p[i]=='?'){
+//         return dp[i][j]= solveMem(p,s,i-1,j-1,dp);
+//     }
+//     else if(p[i]=='*'){
+//         return dp[i][j]=solveMem(p,s,i-1,j,dp) || solveMem(p,s,i,j-1,dp);
+//     }
+//     else{
+//         return 0;
+//     }
+// }
+
+
     int wildCard(string pattern,string str)
     {
         int m=pattern.length();
         int n=str.length();
         // return solveRec(pattern,str,m-1,n-1);
-        vector<vector<int>>dp(m,vector<int>(n,-1));
-        return solveMem(pattern,str,m-1,n-1,dp);
+        vector<vector<int>>dp(m+1,vector<int>(n+1,-1));
+        return solveMem(pattern,str,m,n,dp);
+        // return solveTab(pattern,str,m,n);
         
     }
 };
