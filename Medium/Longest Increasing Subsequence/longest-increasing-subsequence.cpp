@@ -25,7 +25,7 @@ class Solution
                ans[ind]=a[i];
            }
        }
-       return ans.size();
+       return len;
     }
 };
 
