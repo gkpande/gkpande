@@ -155,12 +155,23 @@ class Solution{
         mem[root]=max(incl,excl);
         return mem[root];
     }
+    pair<int,int> solveRec(Node* root){
+        if(root==NULL){
+            pair<int,int>p=make_pair(0,0);
+            return p;
+        }
+        pair<int,int> l=solveRec(root->left);
+        pair<int,int> r=solveRec(root->right);
+        return {root->data+l.second+r.second,max(l.first,l.second)+max(r.first,r.second)};
+    }
     int getMaxSum(Node *root) 
     {
         // return solveRec(root);
         //memorization
-        unordered_map<Node*,int>mem;
-        return solveMem(root,mem);
+        // unordered_map<Node*,int>mem;
+        // return solveMem(root,mem);
+        pair<int,int>ans=solveRec(root);
+        return max(ans.first,ans.second);
     }
 };
 
