@@ -111,7 +111,7 @@ struct Node
 };
 */
 // your task is to complete this function
-Node* solveDfs(Node *root, int &k, int node,int &ans){
+Node* solve(Node* root,int &k,int node,int& ans){
     if(root==NULL){
         return NULL;
     }
@@ -119,8 +119,8 @@ Node* solveDfs(Node *root, int &k, int node,int &ans){
         k--;
         return root;
     }
-    Node* l=solveDfs(root->left,k,node,ans);
-    Node* r=solveDfs(root->right,k,node,ans);
+    Node* l=solve(root->left,k,node,ans);
+    Node* r=solve(root->right,k,node,ans);
     if(l==NULL && r==NULL){
         return NULL;
     }
@@ -129,20 +129,26 @@ Node* solveDfs(Node *root, int &k, int node,int &ans){
             ans=root->data;
             return NULL;
         }
-        else if(l){
+        else if(l==NULL && r!=NULL){
+            k--;
+            return r;
+        }
+        else if(l!=NULL && r==NULL){
             k--;
             return l;
         }
         else{
             k--;
-            return r;
+            return root;
         }
-        
     }
+    
+    
 }
 int kthAncestor(Node *root, int k, int node)
 {
     int ans=-1;
-    solveDfs(root,k,node,ans);
+    Node* temp=solve(root,k,node,ans);
+    
     return ans;
 }
