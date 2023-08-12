@@ -11,10 +11,8 @@ class Solution
     //Function to find length of longest increasing subsequence.
     int longestSubsequence(int n, int a[])
     {
-       // using binary search
-       
-       vector<int>ans;
-       int len=1;
+        vector<int>ans;
+        int len=1;
        ans.push_back(a[0]);
        for(int i=1;i<n;i++){
            if(a[i]>ans.back()){
@@ -26,6 +24,7 @@ class Solution
            }
        }
        return len;
+
     }
 };
 
