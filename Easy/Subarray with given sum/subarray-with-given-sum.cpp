@@ -28,8 +28,8 @@ class Solution
                 ans.push_back(l+1);
                 ans.push_back(r+1);
                 break;
-            }else if(l>r){
-                r++;
+            // }else if(l>r){
+            //     r++;
             }else{
                 r++;
             }
@@ -40,6 +40,7 @@ class Solution
         return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 
