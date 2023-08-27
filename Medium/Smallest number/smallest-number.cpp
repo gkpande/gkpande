@@ -6,6 +6,7 @@ using namespace std;
 class Solution{   
 public:
     string smallestNumber(int S, int D){
+        // maximum sum is 9*D
         if(9*D<S){
             return "-1";
         }
@@ -16,6 +17,7 @@ public:
                 S-=9;
             }
             else{
+                //now single digit left
                 //may be last digit
                 if(i==0){
                     ans=to_string(S)+ans;
@@ -35,6 +37,7 @@ public:
         return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() 
