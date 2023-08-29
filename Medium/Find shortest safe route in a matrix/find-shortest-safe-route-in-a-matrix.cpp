@@ -56,10 +56,10 @@ void solve(vector<vector<int>> &mat,vector<vector<int>> &vis,int i,int j,int ste
 }
     int findShortestPath(vector<vector<int>> &mat)
     {
-                int n = mat.size(), m = mat[0].size();
+        int n = mat.size(), m = mat[0].size();
         vector<vector<int>>vis(n,vector<int>(m));
         int dx[4] = {-1,1,0,0}, dy[4] = {0,0,-1,1};
-        
+        //mark unsafe state as -1
         for(int i=0;i<n;i++) {
             for(int j=0;j<m;j++) {
                 if(mat[i][j] == 0) {
